@@ -1,0 +1,30 @@
+created:
+    - database/factories/CouponFactory.php
+    - database/factories/OrderFactory.php
+    - database/factories/OrderItemFactory.php
+    - database/migrations/2024_08_07_070630_create_coupons_table.php
+    - database/migrations/2024_08_07_070631_create_orders_table.php
+    - database/migrations/2024_08_07_070632_create_order_items_table.php
+    - database/migrations/2024_08_07_070633_create_coupon_order_table.php
+    - app/Models/Coupon.php
+    - app/Models/Order.php
+    - app/Models/OrderItem.php
+models:
+    Address: { user_id: 'biginteger unsigned', country_id: 'biginteger unsigned', city_id: 'biginteger unsigned', area_id: 'biginteger unsigned', is_default: boolean, street: string, building_type: string, building_number: string, floor: 'string nullable', apartment_number: 'string nullable' }
+    Area: { city_id: 'biginteger unsigned', name: string, is_visible: 'boolean default:1', rate: double }
+    Blog: { title: string, slug: string, content: 'longtext nullable', desc: 'longtext nullable', featured_image: 'string nullable', seo: 'json nullable', is_published: boolean, extra_fields: 'json nullable' }
+    Branch: { name: string, area_id: 'biginteger unsigned', username: string, password: string, extra_fields: 'json nullable' }
+    City: { country_id: 'biginteger unsigned', name: string, is_visible: 'boolean default:1' }
+    Country: { name: string, code: string, flag: 'string nullable', is_visible: 'boolean default:1' }
+    Faq: { question: longtext, answer: longtext, extra_fields: 'json nullable' }
+    FaqCategory: { name: string }
+    GlobalSetting: { title: string, slug: string, extra_fields: 'json nullable' }
+    Page: { title: string, slug: string, content: 'longtext nullable', seo: 'json nullable', extra_fields: 'json nullable' }
+    Product: { name: string, slug: string, sku: string, description: 'longtext nullable', short_description: 'longtext nullable', image: 'string nullable', gallery: 'json nullable', seo: 'json nullable', type: 'string default:simple', is_visible: 'boolean default:1', price: double, sale_price: 'double nullable', manage_stock: boolean, stock_status: 'string default:instock', stock_qtn: integer, total_sales: integer, backorder_limit: integer, extra_fields: 'json nullable' }
+    ProductImage: { product_id: 'biginteger unsigned', is_primary: boolean, image: string, alt: 'string nullable', title: 'string nullable', caption: 'string nullable', description: 'string nullable', width: 'integer nullable', height: 'integer nullable' }
+    ProductReview: { product_id: 'biginteger unsigned', user_id: 'biginteger unsigned', rating: double, review: string }
+    ShopCategory: { name: string, slug: string, parent_id: 'biginteger unsigned nullable', description: 'longtext nullable', image: 'json nullable', seo: 'json nullable', is_visible: 'boolean default:1' }
+    User: { name: string, email: string, email_verified_at: 'timestamp nullable', password: string, remember_token: 'string:100 nullable' }
+    Coupon: { name: string, code: string, discount_value: number, discount_type: string, valid_from: datetime, valid_to: datetime, relationships: { belongsToMany: Order } }
+    Order: { user_id: unsignedInteger, coupon_id: 'unsignedInteger nullable', address_id: 'unsignedInteger nullable', area_id: 'unsignedInteger nullable', total_amount: float, status: string, is_gift: boolen, gift_recipient_name: string, gift_recipient_address: string, notes: text, relationships: { hasOne: Coupon, hasMany: OrderItem, belongsTo: 'User, Address, Area' } }
+    OrderItem: { order_id: unsignedInteger, product_id: unsignedInteger, total_amount: float, quantity: integer, price: float, variation_data: text, relationships: { belongsTo: Order, hasOne: Product } }

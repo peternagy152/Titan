@@ -1,0 +1,36 @@
+models:
+  Coupon:
+    name: string
+    code: string
+    discount_value: number
+    discount_type: string
+    valid_from: datetime
+    valid_to: datetime
+    relationships:
+      belongsToMany: Order
+
+  Order:
+    user_id: unsignedInteger
+    coupon_id: unsignedInteger nullable
+    address_id: unsignedInteger nullable
+    area_id: unsignedInteger nullable
+    total_amount: float
+    status: string
+    is_gift: boolen
+    gift_recipient_name: string
+    gift_recipient_address: string
+    notes: text
+    relationships:
+      hasOne: Coupon
+      hasMany: OrderItem
+      belongsTo: User, Address, Area
+  
+  OrderItem:
+    order_id: unsignedInteger
+    product_id: unsignedInteger
+    total_amount: float
+    quantity: integer
+    price: float
+    variation_data: text
+    relationships:
+      belongsTo: Order, Product

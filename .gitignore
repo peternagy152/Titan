@@ -1,0 +1,14 @@
+/vendor
+/node_modules
+/public/*
+!/public/index.php
+!/public/.htaccess
+!/public/robots.txt
+!/public/favicon.ico
+/storage/*.key
+/.env.backup
+/.env
+.log
+/.log
+.idea
+/.vscode
